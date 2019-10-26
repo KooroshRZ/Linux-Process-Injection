@@ -1,0 +1,3 @@
+/home/kourosh/CLionProjects/ProcessInjectorLinux/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/kourosh/CLionProjects/ProcessInjectorLinux/cmake-build-debug/CMakeFiles/ProcessInjectorLinux.dir
+/home/kourosh/CLionProjects/ProcessInjectorLinux/cmake-build-debug/CMakeFiles/edit_cache.dir

@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/kourosh/CLionProjects/ProcessInjectorLinux/Injection.cpp
+cstdlib
+-
+Injection.h
+/home/kourosh/CLionProjects/ProcessInjectorLinux/Injection.h
+
+/home/kourosh/CLionProjects/ProcessInjectorLinux/Injection.h
+stdio.h
+-
+unistd.h
+-
+dlfcn.h
+-
+cstring
+-
+sys/types.h
+-
+sys/ptrace.h
+-
+sys/user.h
+-
+sys/reg.h
+-
+
