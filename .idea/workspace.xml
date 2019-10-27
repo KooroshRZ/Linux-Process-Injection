@@ -12,12 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="29f51ac2-bebd-4083-8f99-9827763ab4ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Injection.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Injection.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Injection.h" beforeDir="false" afterPath="$PROJECT_DIR$/Injection.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ProcessInjectorLinux.dir/Injection.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ProcessInjectorLinux" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ProcessInjectorLinux" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,11 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Injection.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="173" column="26" selection-start-line="173" selection-start-column="26" selection-end-line="173" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="62">
+              <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -48,8 +43,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Injection.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+            <state relative-caret-position="197">
+              <caret line="23" column="41" lean-forward="true" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
               <folding>
                 <element signature="e#168#186#0" expanded="true" />
               </folding>
@@ -63,6 +58,15 @@
     <findStrings>
       <find>He</find>
       <find>dlop</find>
+      <find>mem</find>
+      <find>memcpy</find>
+      <find>WriteToMemory</find>
+      <find>status</find>
+      <find>ReadFromTargetMemory</find>
+      <find>24866</find>
+      <find>int pi</find>
+      <find>read</find>
+      <find>readfrom</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -93,6 +97,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -104,7 +109,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -147,12 +151,13 @@
       <workItem from="1572105911051" duration="26948000" />
       <workItem from="1572175804791" duration="2794000" />
       <workItem from="1572179176846" duration="156000" />
-      <workItem from="1572179392956" duration="5901000" />
+      <workItem from="1572179392956" duration="10618000" />
+      <workItem from="1572202450894" duration="7268000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48216000" />
+    <option name="totallyTimeSpent" value="60201000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -167,18 +172,18 @@
     <frame x="67" y="25" width="1299" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27134877" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27613726" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.41833332" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33666667" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.6333333" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.32166666" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.445" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32833335" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
@@ -237,8 +242,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Injection.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+        <state relative-caret-position="197">
+          <caret line="23" column="41" lean-forward="true" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
           <folding>
             <element signature="e#168#186#0" expanded="true" />
           </folding>
@@ -247,11 +252,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Injection.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="173" column="26" selection-start-line="173" selection-start-column="26" selection-end-line="173" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="62">
+          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
         </state>
       </provider>
     </entry>
