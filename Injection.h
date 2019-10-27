@@ -21,3 +21,5 @@
 
 int Inject(int pid, void* dlopenAddr);
 void* FindLibraryAddress(pid_t PID, const char* LibraryName);
+int ReadFromTargetMemory(pid_t PID, unsigned long long addr, void* data, int len);
+void* FindExecutableSpace(pid_t PID);
